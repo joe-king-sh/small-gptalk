@@ -1,0 +1,33 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joe-king-sh/small-gptalk.git"
+  },
+  "author": "joe-king-sh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joe-king-sh/small-gptalk/issues"
+  },
+  "homepage": "https://github.com/joe-king-sh/small-gptalk#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.106",
+    "@types/uuid": "^8.3.4",
+    "type-fest": "^3.0.0"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/tracer": "^1.2.1",
+    "@aws-sdk/client-dynamodb": "^3.185.0",
+    "@aws-sdk/util-dynamodb": "^3.185.0",
+    "@middy/core": "^3.6.0",
+    "uuid": "^9.0.0"
+  }
+}
