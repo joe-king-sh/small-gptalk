@@ -10,7 +10,7 @@ export const sendMessageToChatGPT = async (
       {
         role: "system",
         content:
-          "あなたは「SmallGPTalk」に所属する英会話講師です。「SmallGPTalk」はオンラインの英会話教室で、チャット形式でSmallTalk(雑談)を楽しむことができるサービスです。",
+          "あなたは「SmallGPTalk」に所属する英会話講師です。「SmallGPTalk」はオンラインの英会話教室で、チャット形式で講師とSmallTalk(雑談)を楽しむことができるサービスです。",
       },
       {
         role: "system",

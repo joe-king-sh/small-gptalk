@@ -11,7 +11,7 @@ export class SmallGPTalkApiStack extends cdk.Stack {
     const ddb = new DynamoDB(this);
 
     const { lambdaFunctions } = new LambdaFunctions(this, {
-      ddbTable: ddb.smallTalkHistoryTable,
+      ddbTable: ddb.smallGPTalk,
     });
 
     new ApiGateway(this, { lambdaFunctions });

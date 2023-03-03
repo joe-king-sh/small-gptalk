@@ -3,17 +3,34 @@ import { Table, AttributeType, BillingMode } from "aws-cdk-lib/aws-dynamodb";
 import { Construct } from "constructs";
 
 export class DynamoDB {
-  smallTalkHistoryTable: Table;
+  smallGPTalk: Table;
 
   constructor(scope: Construct) {
-    this.smallTalkHistoryTable = new Table(scope, "SmallTalkHistory", {
+    this.smallGPTalk = new Table(scope, "SmallGPTalk", {
       partitionKey: {
-        name: "Uid",
+        name: "PK",
         type: AttributeType.STRING,
       },
-      tableName: "SmallTalkHistory",
+      sortKey: {
+        name: "SK",
+        type: AttributeType.STRING,
+      },
+
+      tableName: "SmallGPTalk",
       removalPolicy: RemovalPolicy.DESTROY,
       billingMode: BillingMode.PAY_PER_REQUEST,
+    });
+
+    this.smallGPTalk.addGlobalSecondaryIndex({
+      indexName: "SK-sent-at-index",
+      partitionKey: {
+        name: "SK",
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: "SentAt",
+        type: AttributeType.STRING,
+      },
     });
   }
 }

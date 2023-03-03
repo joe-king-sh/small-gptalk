@@ -2,14 +2,14 @@
 
 ## Access Pattern
 
-1. fetchLessonRoomByUid
+1. fetchActiveLessonRoomByUid
    1. LINE ユーザーからのリクエストに含まれる UID から、進行中のレッスンルーム ID を 1 件取得する
-1. createLessonRoom
+1. putLessonRoom
    1. 新しいレッスンルームを 1 件作成する
 1. fetchConversationsByLessonRoomId
    1. レッスンルーム ID をもとに会話履歴を全件取得する
    2. ソート順は、送信日の降順
-      1 . closeLessonRoomByLessonRoomId
+      1 . putLessonRoom
    3. レッスンルーム ID をもとにレッスンルームを「終了」に変更する
 
 ## ER Diagrams
