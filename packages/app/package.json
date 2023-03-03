@@ -27,6 +27,7 @@
     "@aws-lambda-powertools/tracer": "^1.2.1",
     "@aws-sdk/client-dynamodb": "^3.185.0",
     "@aws-sdk/util-dynamodb": "^3.185.0",
+    "@line/bot-sdk": "^7.5.2",
     "@middy/core": "^3.6.0",
     "uuid": "^9.0.0"
   }

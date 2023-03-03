@@ -4,6 +4,7 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export interface MyNodejsFunctionProps {
   handlerFileName: string;
+  envronmentVariables: { [key in string]: string };
 }
 
 export class MyNodejsFunction extends Construct {
@@ -12,15 +13,18 @@ export class MyNodejsFunction extends Construct {
   constructor(scope: Construct, id: string, props: MyNodejsFunctionProps) {
     super(scope, id);
 
+    const { handlerFileName, envronmentVariables } = props;
+
     this.nodeJsFunction = new aws_lambda_nodejs.NodejsFunction(
       this,
       "NodejsLambdaFunction",
       {
-        entry: `../app/src/handlers/${props.handlerFileName}.ts`,
+        entry: `../app/src/handlers/${handlerFileName}.ts`,
         bundling: {
           forceDockerBundling: false,
         },
         tracing: aws_lambda.Tracing.ACTIVE,
+        environment: { ...envronmentVariables },
       }
     );
   }
