@@ -24,12 +24,5 @@ export class ApiGateway {
       "POST",
       new apigateway.LambdaIntegration(lambdaFunctions.postLineWebhook)
     );
-
-    const lineMessagesResource = lineResource.addResource("messages");
-    const lineMessagesReplyResource = lineMessagesResource.addResource("reply");
-    lineMessagesReplyResource.addMethod(
-      "POST",
-      new apigateway.LambdaIntegration(lambdaFunctions.postLineMessagesReply)
-    );
   }
 }

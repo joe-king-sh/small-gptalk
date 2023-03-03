@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { aws_lambda_nodejs, aws_lambda } from "aws-cdk-lib";
+import { aws_lambda_nodejs, aws_lambda, Duration } from "aws-cdk-lib";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export interface MyNodejsFunctionProps {
@@ -19,12 +19,13 @@ export class MyNodejsFunction extends Construct {
       this,
       "NodejsLambdaFunction",
       {
-        entry: `../app/src/handlers/${handlerFileName}.ts`,
+        entry: `../app/src/handler/${handlerFileName}.ts`,
         bundling: {
           forceDockerBundling: false,
         },
         tracing: aws_lambda.Tracing.ACTIVE,
         environment: { ...envronmentVariables },
+        timeout: Duration.seconds(29),
       }
     );
   }

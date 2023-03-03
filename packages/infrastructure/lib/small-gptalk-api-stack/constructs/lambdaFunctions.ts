@@ -5,8 +5,6 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Table } from "aws-cdk-lib/aws-dynamodb";
 import { getSSMParameter } from "../../utils/ssm";
 
-// const distPath = path.join(__dirname, "../../../../app/dist/handlers");
-
 type LambdaFunctionsProps = {
   ddbTable: Table;
 };
@@ -16,7 +14,7 @@ export class LambdaFunctions {
   lambdaFunctions: ILambdaFunctionsByName = {};
 
   constructor(readonly scope: Construct, readonly props: LambdaFunctionsProps) {
-    const fileNames: string[] = ["postLineWebhook", "postLineMessagesReply"];
+    const fileNames: string[] = ["postLineWebhook"];
 
     fileNames.forEach((fileName: string) => {
       const nodeJsFunction = new MyNodejsFunction(scope, fileName, {
@@ -24,6 +22,7 @@ export class LambdaFunctions {
         envronmentVariables: {
           CHANNEL_ACCESS_TOKEN: getSSMParameter(scope, "CHANNEL_ACCESS_TOKEN"),
           CHANNEL_SECRET: getSSMParameter(scope, "CHANNEL_SECRET"),
+          OPENAI_API_KEY: getSSMParameter(scope, "OPENAI_API_KEY"),
         },
       }).nodeJsFunction;
       props.ddbTable.grantFullAccess(nodeJsFunction);

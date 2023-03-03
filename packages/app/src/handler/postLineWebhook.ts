@@ -7,6 +7,14 @@ import { Tracer, captureLambdaHandler } from "@aws-lambda-powertools/tracer";
 import middy from "@middy/core";
 import { Logger, injectLambdaContext } from "@aws-lambda-powertools/logger";
 import * as line from "@line/bot-sdk";
+import { getEnv } from "src/lib/env";
+import { sendMessageToChatGPT } from "src/lib/openaiApi";
+
+import { Configuration, OpenAIApi } from "openai";
+import {
+  getMessageAndReplyTokenFromWebhookEvent,
+  sendMessageToLINE,
+} from "src/lib/line";
 
 const tracer = new Tracer({
   serviceName: "small-gptalk-api",
@@ -16,23 +24,27 @@ const logger = new Logger({
   logLevel: "debug",
 });
 
-const config: line.ClientConfig = {
-  channelAccessToken: process.env["CHANNEL_ACCESS_TOKEN"]!,
-  channelSecret: process.env["CHANNEL_SECRET"]!,
-};
+const { CHANNEL_ACCESS_TOKEN, CHANNEL_SECRET, OPENAI_API_KEY } = getEnv();
+const lineClient = new line.Client({
+  channelAccessToken: CHANNEL_ACCESS_TOKEN,
+  channelSecret: CHANNEL_SECRET,
+});
 
-const client = new line.Client(config);
+const openaiClient = new OpenAIApi(
+  new Configuration({
+    apiKey: OPENAI_API_KEY,
+  })
+);
 
-function echoResponse(
-  event: line.WebhookEvent
-): Promise<line.MessageAPIResponseBase | null> {
-  if (event.type !== "message" || event.message.type !== "text") {
-    return Promise.resolve(null);
+const handle = async (webhookEvent: line.WebhookEvent) => {
+  if (webhookEvent.type !== "message" || webhookEvent.message.type !== "text") {
+    return undefined;
   }
-
-  const echo: line.TextMessage = { type: "text", text: event.message.text };
-  return client.replyMessage(event.replyToken, echo);
-}
+  const { message, replyToken } =
+    getMessageAndReplyTokenFromWebhookEvent(webhookEvent);
+  const messageFromChatGPT = await sendMessageToChatGPT(openaiClient, message);
+  return sendMessageToLINE(lineClient, replyToken, messageFromChatGPT);
+};
 
 const lambdaHandler = async (
   event: APIGatewayProxyEventBase<APIGatewayEventDefaultAuthorizerContext>,
@@ -47,12 +59,16 @@ const lambdaHandler = async (
       body: JSON.stringify(event),
     };
   }
-  const body = JSON.parse(event.body);
+  const webhookEvents = JSON.parse(event.body).events;
+
   try {
-    await Promise.all(body.events.map(echoResponse));
+    await Promise.all(webhookEvents.map(handle));
     return { statusCode: 200, body: "OK" };
   } catch (err) {
-    console.error(err);
+    logger.error("event", {
+      data: event,
+      message: "An unexpected error occoured",
+    });
     return { statusCode: 500, body: "Internal Server Error" };
   }
 };
