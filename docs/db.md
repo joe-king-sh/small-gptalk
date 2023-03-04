@@ -42,13 +42,13 @@ erDiagram
 
 ### SmallGPTalk Table
 
-|                            | PrimaryKey               |                                       | Attributes         |                           |
-| -------------------------- | ------------------------ | ------------------------------------- | ------------------ | ------------------------- | --- |
-| Record Type                | PK                       | SK                                    |
-| **lesson_room<br>(type)**  | room_id<br>[LESSON#uuid] | uid<br>[USER#string]                  | status<br>[string] | created_at<br>[timestamp] |
-| lesson_room<br>(example)   | LESSON#fdba3e0a-9a...    | USER#4fab7256-ac..                    | IN_PROGGRESS       | 2023-03-10T13:50:40+09:00 |
-| **conversation<br>(type)** | room_id<br>[LESSON#uuid] | sent_at<br>[SENT_AT#timestamp]<br>    | sender<br>[string] | message<br>[string]       |
-| conversation<br>(example)  | LESSON#fdba3e0a-9a...    | SENT_AT#2023-03-10T13:50:40+09:00<br> | user               | Hello!!!                  |     |
+|                            | PrimaryKey               |                                 | Attributes         |                        |
+| -------------------------- | ------------------------ | ------------------------------- | ------------------ | ---------------------- | --- |
+| Record Type                | PK                       | SK                              |
+| **lesson_room<br>(type)**  | room_id<br>[LESSON#uuid] | uid<br>[USER#string]            | status<br>[string] | created_at<br>[number] |
+| lesson_room<br>(example)   | LESSON#fdba3e0a-9a...    | USER#4fab7256-ac..              | IN_PROGGRESS       | 1677885697470          |
+| **conversation<br>(type)** | room_id<br>[LESSON#uuid] | sent_at<br>[SENT_AT#number]<br> | sender<br>[string] | message<br>[string]    |
+| conversation<br>(example)  | LESSON#fdba3e0a-9a...    | SENT_AT#1677885697470<br>       | user               | Hello!!!               |     |
 
 ### Indecies
 

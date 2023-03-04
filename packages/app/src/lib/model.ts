@@ -11,12 +11,12 @@ export type LessonRoom = {
   roomId: string;
   uid: string;
   status: LessonStatuType;
-  createdAt: Date;
+  createdAt: number;
 };
 
 export type Conversation = {
   roomId: string;
-  sent_at: string;
-  sender: "user" | "chat_gpt";
+  sentAt: number;
+  sender: "user" | "assistant";
   message: string;
 };

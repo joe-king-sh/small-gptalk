@@ -22,14 +22,14 @@ export class DynamoDB {
     });
 
     this.smallGPTalk.addGlobalSecondaryIndex({
-      indexName: "SK-sent-at-index",
+      indexName: "uid-createdAt-index",
       partitionKey: {
         name: "SK",
         type: AttributeType.STRING,
       },
       sortKey: {
-        name: "SentAt",
-        type: AttributeType.STRING,
+        name: "created_at",
+        type: AttributeType.NUMBER,
       },
     });
   }
