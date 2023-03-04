@@ -1,4 +1,4 @@
-# SmallGPTalk
+# Small GPTalk
 
 <div
  align="center"
@@ -12,12 +12,13 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 AI English lesson powered by ChatGPT.
+[日本語版 README.md はこちらから](/README-ja.md)
 
-## SmallGPTalk とは？
+## Abount Small GPTalk
 
-- SmallGPTalk は、ChatGPT から派遣された AI 英語講師と LINE 上で SmallTalk(世間話) を楽しむためのアプリです。
-- レッスンが始まると、講師はトピックを提示してくれます。好きなトピックを選んで講師と会話を楽しみましょう。
-- レッスンを終わるときは「終わります」と伝えてください。レッスン中のあなたの会話についてフィードバックをくれますよ。
+- SmallGPTalk is an app for enjoying SmallTalk (casual conversation) with an AI English teacher dispatched from ChatGPT on LINE.
+- When the lesson starts, the teacher will provide a topic. Choose your favorite topic and enjoy the conversation with the teacher.
+- When you finish the lesson, please let them know by saying "I'm finished". They will give you feedback on your conversation during the lesson.
 
 <div
  align="center"
@@ -26,17 +27,17 @@ AI English lesson powered by ChatGPT.
 
 ![small-gptalk-line-oa-qr](/assets/small-gptalk-qr.png)
 
-<a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=336nkkvd" target="_blank">LINE で友達になる</a>
+<a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=336nkkvd" target="_blank">Add as a friend on LINE</a>
 
 </div>
 
-## 開発者向け情報
+## Developer Information
 
-SmallGPTalk は OSS です。
+SmallGPTalk is open-source software.
 
-ChatGPT に与える[コンテキスト情報](https://github.com/joe-king-sh/small-gptalk/blob/b63e134f1ab5dc8258ba1275118ec3320d6e6d59/packages/app/src/lib/openaiApi.ts#L18-L73)を変更すると他言語の対応や、英会話以外のシチュエーションでも応用できます。気になる方は是非リポジトリを Folk して遊んでみてください。
+If you change the [context information](https://github.com/joe-king-sh/small-gptalk/blob/b63e134f1ab5dc8258ba1275118ec3320d6e6d59/packages/app/src/lib/openaiApi.ts#L18-L73) provided to ChatGPT, it can be applied in situations other than English conversation or even in other languages. Please feel free to fork the repository and play around with it.
 
-### アーキテクチャ
+### Architecture
 
 <div
  align="center"
@@ -47,19 +48,19 @@ ChatGPT に与える[コンテキスト情報](https://github.com/joe-king-sh/sm
 
 </div>
 
-1. Messaging API の Webhook を API Gateway が受信
-2. Lambda 以下を行う
-   1. ChatGPT が英会話講師を演じるように命令
-   2. レッスンルームの開始終了の管理
-   3. ユーザーと ChatGPT のメッセージの橋渡し
-   4. 会話履歴を DynamoDB で管理
+1. API Gateway receives the Messaging API webhook
+1. Perform the following in Lambda:
+   1. Instruct ChatGPT to act as an English conversation teacher
+   2. Manage the start and end of the lesson room
+   3. Bridge messages between the user and ChatGPT
+   4. Manage conversation history in DynamoDB
 
-### その他設計情報
+### Other Design Information
 
-- [レッスンの流れ](./docs/flow-chart.md)
-- [DB 設計](./docs/db.md)
+- [Lesson Flow](./docs/flow-chart.md)
+- [DB Design](./docs/db.md)
 
-### コマンド
+### Commands
 
 #### Install
 
@@ -75,7 +76,7 @@ $ npm run build
 
 #### Deploy
 
-事前に以下のパラメーターを SSM パラメーターストアに登録
+Register the following parameters in SSM Parameter Store in advance:
 
 ```shell
 $ aws ssm put-parameter --name "CHANNEL_ACCESS_TOKEN" --type "String" --value "<Messaging APIのチャネルアクセストークン>"
@@ -83,8 +84,12 @@ $ aws ssm put-parameter --name "CHANNEL_SECRET" --type "String" --value "<Messag
 $ aws ssm put-parameter --name "OPENAI_API_KEY" --type "String" --value "<OpenAI APIのAPI Key>"
 ```
 
-CDK デプロイ
+CDK Deploy:
 
 ```shell
 $ npm run deploy
 ```
+
+## Link
+
+- [DevelopersIO: AI-powered English Learning with ChatGPT and LINE Bot - Introducing "Small GPTalk"](https://dev.classmethod.jp/articles/smalltalk-with-chatgpt-small-gptalk/)
