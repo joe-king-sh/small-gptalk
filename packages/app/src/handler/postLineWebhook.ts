@@ -93,13 +93,7 @@ const handle = async (webhookEvent: line.WebhookEvent) => {
       });
 
       // 会話が終わったら終了処理をする
-      if (
-        await hasConversationEnded({
-          conversations,
-          messageFromUser,
-          messageFromChatGPT,
-        })
-      ) {
+      if (await hasConversationEnded({ messageFromUser })) {
         await endLesson({
           conversations,
           messageFromUser,
@@ -129,6 +123,7 @@ const handle = async (webhookEvent: line.WebhookEvent) => {
             message: messageFromChatGPT,
           },
         });
+        return;
       }
     }
   } catch (error) {
@@ -282,13 +277,9 @@ const endLesson = async ({
 };
 
 const hasConversationEnded = async ({
-  // conversations,
   messageFromUser,
-}: // messageFromChatGPT,
-{
-  conversations: Conversation[];
+}: {
   messageFromUser: string;
-  // messageFromChatGPT: string;
 }) => {
   return ["おわり", "終"].some((val) => messageFromUser.includes(val));
 };
