@@ -34,13 +34,18 @@ AI English lesson powered by ChatGPT.
 
 SmallGPTalk は OSS です。
 
-ChatGPT に与える[コンテキスト情報](https://github.com/joe-king-sh/small-gptalk/blob/b63e134f1ab5dc8258ba1275118ec3320d6e6d59/packages/app/src/lib/openaiApi.ts#L18-L73)を変更すると他言語の対応や、英会話以外のシチュエーションでも応用できます。
-
-気になる方は是非リポジトリを Folk して遊んでみてください。
+ChatGPT に与える[コンテキスト情報](https://github.com/joe-king-sh/small-gptalk/blob/b63e134f1ab5dc8258ba1275118ec3320d6e6d59/packages/app/src/lib/openaiApi.ts#L18-L73)を変更すると他言語の対応や、英会話以外のシチュエーションでも応用できます。気になる方は是非リポジトリを Folk して遊んでみてください。
 
 ### アーキテクチャ
 
+<div
+ align="center"
+ style="margin:auto"
+>
+
 ![small-gptalk-architecture](/assets/architecture.drawio.svg)
+
+</div>
 
 1. Messaging API の Webhook を API Gateway が受信
 2. Lambda 以下を行う
